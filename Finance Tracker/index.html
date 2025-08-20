@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Personal Finance Tracker</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Authentication Section -->
+    <div id="authSection" class="container">
+        <div class="auth-container">
+            <div class="auth-form">
+                <h1 id="authTitle">Welcome Back</h1>
+                <p class="subtitle">Sign in to your account to continue</p>
+
+                <div id="alertContainer"></div>
+
+                <form id="authForm">
+                    <div class="form-group" id="nameGroup">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" placeholder="Your name (required for sign up)" />
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" required/>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" required/>
+                    </div>
+                    <div class="form-group hidden" id="confirmPasswordGroup">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input type="password" id="confirmPassword"/>
+                    </div>
+                    <div style="margin-top:8px;">
+                        <button type="submit" class="btn" id="authSubmitBtn">Sign In</button>
+                    </div>
+                </form>
+
+                <div class="auth-switch">
+                    <span id="authSwitchText">Don't have an account?</span>
+                    <a href="#" id="authSwitchLink">Sign up here</a>
+                </div>
+            </div>
+
+            <div class="auth-visual">
+                💸 Finance Tracker
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Section -->
+    <div id="dashboardSection" class="container hidden">
+        <div class="header">
+            <h1>💰 Personal Finance Tracker</h1>
+            <div class="user-info">
+                <button class="btn btn-secondary" onclick="logout()">Logout</button>
+                <span id="userName" style="color:#666; font-weight:600;"></span>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div id="dashboardAlerts"></div>
+
+            <div class="stats-grid">
+                <div class="stat-card income">
+                    <h3>Total Income</h3>
+                    <div class="stat-value" id="totalIncome">₹0</div>
+                </div>
+                <div class="stat-card expense">
+                    <h3>Total Expenses</h3>
+                    <div class="stat-value" id="totalExpenses">₹0</div>
+                </div>
+                <div class="stat-card balance">
+                    <h3>Net Balance</h3>
+                    <div class="stat-value" id="netBalance">₹0</div>
+                </div>
+            </div>
+
+            <div class="sections-grid">
+                <div class="section">
+                    <h2>Add Transaction</h2>
+                    <form id="transactionForm" class="transaction-form">
+                        <div>
+                            <label for="type">Type</label>
+                            <select id="type" required>
+                                <option value="income">Income</option>
+                                <option value="expense">Expense</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="amount">Amount (₹)</label>
+                            <input type="number" id="amount" min="0" step="0.01" required/>
+                        </div>
+
+                        <div>
+                            <label for="category">Category</label>
+                            <input type="text" id="category" required placeholder="e.g., Food, Salary, Transport"/>
+                        </div>
+
+                        <div>
+                            <label for="description">Description</label>
+                            <input type="text" id="description" placeholder="Brief description (optional)"/>
+                        </div>
+
+                        <div style="margin-top:6px;">
+                            <button type="submit" class="btn">Add Transaction</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div>
+                    <div class="section" style="margin-bottom:14px;">
+                        <h2>Recent Transactions</h2>
+                        
+                        <div class="sort-controls">
+                            <span>Sort by:</span>
+                            <select id="sortBy" onchange="loadTransactions()">
+                                <option value="amount">Amount</option>
+                                <option value="date">Date</option>
+                            </select>
+                            <select id="sortOrder" onchange="loadTransactions()">
+                                <option value="desc">High to Low</option>
+                                <option value="asc">Low to High</option>
+                            </select>
+                        </div>
+                        
+                        <div id="transactionsList" class="transactions-list">
+                            <p style="text-align:center; color:#777; padding:20px;">No transactions yet. Add your first transaction!</p>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h2>Expense Categories</h2>
+                        <div class="chart-container">
+                            <canvas id="categoryChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script src="script.js"></script>
+</body>
+</html>
