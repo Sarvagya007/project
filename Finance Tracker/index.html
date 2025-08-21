@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Personal Finance Tracker</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
-    <link href="style.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <!-- Authentication Section -->
@@ -18,6 +18,7 @@
                 <div id="alertContainer"></div>
 
                 <form id="authForm">
+                    <!-- Name is always visible; required only for Sign Up -->
                     <div class="form-group" id="nameGroup">
                         <label for="name">Name</label>
                         <input type="text" id="name" placeholder="Your name (required for sign up)" />
@@ -84,21 +85,32 @@
                     <h2>Add Transaction</h2>
                     <form id="transactionForm" class="transaction-form">
                         <div>
-                            <label for="type">Type</label>
-                            <select id="type" required>
-                                <option value="income">Income</option>
-                                <option value="expense">Expense</option>
+                            <label for="category">Category</label>
+                            <select id="category" required>
+                                <optgroup label="Income Categories">
+                                    <option value="salary">Salary</option>
+                                    <option value="freelance">Freelance</option>
+                                    <option value="investment">Investment</option>
+                                    <option value="other-income">Other Income</option>
+                                </optgroup>
+                                <optgroup label="Expense Categories">
+                                    <option value="food">Food & Dining</option>
+                                    <option value="rent">Rent & Housing</option>
+                                    <option value="transport">Transportation</option>
+                                    <option value="entertainment">Entertainment</option>
+                                    <option value="healthcare">Healthcare</option>
+                                    <option value="shopping">Shopping</option>
+                                    <option value="utilities">Utilities</option>
+                                    <option value="education">Education</option>
+                                    <option value="travel">Travel</option>
+                                    <option value="other-expense">Other Expenses</option>
+                                </optgroup>
                             </select>
                         </div>
 
                         <div>
                             <label for="amount">Amount (₹)</label>
                             <input type="number" id="amount" min="0" step="0.01" required/>
-                        </div>
-
-                        <div>
-                            <label for="category">Category</label>
-                            <input type="text" id="category" required placeholder="e.g., Food, Salary, Transport"/>
                         </div>
 
                         <div>
@@ -110,24 +122,32 @@
                             <button type="submit" class="btn">Add Transaction</button>
                         </div>
                     </form>
+
+                    <hr style="margin:14px 0; border:0; border-top:1px solid #f0f2f8;">
+
+                    <h2 style="font-size:0.95rem; margin-bottom:8px;">Monthly Budget</h2>
+                    <div style="display:flex; gap:10px; align-items:center; margin-bottom:8px;">
+                        <input type="number" id="monthlyBudget" min="0" step="100" placeholder="Set budget (₹)" style="flex:1;"/>
+                        <button class="btn" onclick="setBudget()">Set</button>
+                    </div>
+
+                    <div id="budgetDisplay" class="hidden" style="margin-top:8px;">
+                        <div style="display:flex; justify-content:space-between; color:#666; font-size:0.95rem; margin-bottom:6px;">
+                            <span>Monthly Expenses: ₹<span id="monthlyExpenses">0</span></span>
+                            <span>Budget: ₹<span id="budgetAmount">0</span></span>
+                        </div>
+                        <div class="budget-progress">
+                            <div id="budgetFill" class="budget-fill" style="width:0%"></div>
+                        </div>
+                        <div style="text-align:center; color:#666; font-size:0.9rem; margin-top:6px;">
+                            <span id="budgetPercentage">0%</span> of budget used
+                        </div>
+                    </div>
                 </div>
 
                 <div>
                     <div class="section" style="margin-bottom:14px;">
                         <h2>Recent Transactions</h2>
-                        
-                        <div class="sort-controls">
-                            <span>Sort by:</span>
-                            <select id="sortBy" onchange="loadTransactions()">
-                                <option value="amount">Amount</option>
-                                <option value="date">Date</option>
-                            </select>
-                            <select id="sortOrder" onchange="loadTransactions()">
-                                <option value="desc">High to Low</option>
-                                <option value="asc">Low to High</option>
-                            </select>
-                        </div>
-                        
                         <div id="transactionsList" class="transactions-list">
                             <p style="text-align:center; color:#777; padding:20px;">No transactions yet. Add your first transaction!</p>
                         </div>
@@ -143,6 +163,9 @@
             </div>
         </div>
     </div>
-<script src="script.js"></script>
+
+    <!-- JS File -->
+    <script src="script.js"></script>
 </body>
 </html>
+
